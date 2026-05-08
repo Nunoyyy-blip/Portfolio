@@ -30,6 +30,45 @@
             line-height: 1.4;
         }
 
+        /* ===== STICKY NAVBAR ===== */
+        .navbar-custom {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            color: #3498db !important;
+            font-size: 1.3rem;
+        }
+
+        .navbar-custom .nav-link {
+            color: #4a5b6e !important;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0 8px;
+            transition: color 0.2s;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #3498db !important;
+        }
+
+        .navbar-custom .nav-link.active {
+            color: #3498db !important;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 2px;
+        }
+
+        body {
+            padding-top: 70px;
+        }
+
         /* ===== 100vh SECTIONS — EACH TAKES FULL VIEWPORT HEIGHT ===== */
         .hero-section,
         .skills-section,
@@ -375,10 +414,43 @@
             .display-5 {
                 font-size: 1.8rem !important;
             }
+
+            .navbar-custom .nav-link {
+                margin: 0 4px;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
+<!-- STICKY NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#home">
+            <i class="fas fa-code me-2"></i>Manlangit
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#skills">Skills</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#projects">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <!-- Hero Section — 100vh, content vertically centered -->
 <section id="home" class="hero-section">
     <div class="container py-4">
@@ -707,6 +779,27 @@
             });
         }, { threshold: 0.2 });
         document.querySelectorAll('.skill-card').forEach(card => extraObserver.observe(card));
+
+        // Update active navbar link on scroll
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
     });
 </script>
 </body>
