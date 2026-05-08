@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manlangit | Backend Developer Portfolio</title>
+    <meta name="description" content="Aspiring backend developer specializing in ASP.NET Core, C#, and modern web technologies.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/a6f6b1c5ac.js">
+    <style>
+        /* ========================================
+               RESET & GLOBAL — 100vh PER SECTION
+               COMPACT SKILL CARDS (CLEAN & PROFESSIONAL)
+            ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+            color: #1e2a3e;
+            line-height: 1.4;
+        }
+
+        /* ===== 100vh SECTIONS — EACH TAKES FULL VIEWPORT HEIGHT ===== */
+        .hero-section,
+        .skills-section,
+        .projects-section,
+        .cta-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 100%;
+        }
+
+        /* subtle section dividers */
+        .skills-section {
+            background: rgba(248, 250, 255, 0.96);
+            border-top: 1px solid rgba(52, 152, 219, 0.1);
+            border-bottom: 1px solid rgba(52, 152, 219, 0.1);
+        }
+
+        .projects-section {
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .cta-section {
+            background: linear-gradient(115deg, #1e2a3a 0%, #0f1722 100%);
+        }
+
+        /* ===== COMPACT SKILL CARDS — MAS MALIIT, HINDI SAGAD ===== */
+        .skill-card {
+            transition: all 0.25s ease;
+            background: rgba(255, 255, 255, 0.92) !important;
+            backdrop-filter: blur(4px);
+            border-radius: 20px !important;
+            border: 1px solid rgba(255, 255, 255, 0.6) !important;
+            height: 100%;
+            min-height: 280px;
+            max-height: 320px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+            .skill-card .card-body {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                padding: 1.2rem 1rem !important;
+            }
+
+            /* more compact text */
+            .skill-card .card-text {
+                flex: 1;
+                margin-bottom: 0.65rem;
+                font-size: 0.72rem;
+                line-height: 1.35;
+                color: #4a5b6e;
+            }
+
+            .skill-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 18px 30px -12px rgba(0, 0, 0, 0.12) !important;
+                border-color: #3498db !important;
+                background: rgba(255, 255, 255, 0.98) !important;
+            }
+
+        .skill-icon {
+            font-size: 2rem !important;
+            margin-bottom: 0.6rem;
+            transition: transform 0.2s;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.03);
+        }
+
+        /* progress bar micro design */
+        .skill-progress {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-custom {
+            height: 5px;
+            background: #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .skill-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 4px;
+        }
+
+        .skill-level {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 2px 10px;
+            border-radius: 40px;
+            letter-spacing: 0.2px;
+        }
+
+        .skill-percentage {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .skill-badge-new {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.12), rgba(46, 204, 113, 0.08));
+            color: #2c6e9e;
+            font-size: 0.6rem;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .skill-card .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: #1f2d3d;
+        }
+
+        /* section titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            color: #1f2d3d;
+            font-size: 2rem;
+            letter-spacing: -0.3px;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 55px;
+                height: 3px;
+                background: linear-gradient(90deg, #3498db, #2ecc71);
+                border-radius: 4px;
+            }
+
+        /* hero / glass card */
+        .hero-card .card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .stat-box {
+            background: rgba(245, 248, 250, 0.7);
+            border-radius: 18px;
+            transition: all 0.2s;
+            padding: 10px 6px;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+            .stat-box:hover {
+                background: white;
+                transform: scale(1.02);
+            }
+
+        .btn-soft-primary {
+            background: linear-gradient(135deg, #3b6e9e, #2c5a82);
+            color: white;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+            .btn-soft-primary:hover {
+                background: linear-gradient(135deg, #2c5a82, #1e4668);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+                color: white;
+            }
+
+        .btn-soft-outline {
+            background: transparent;
+            color: #4a627a;
+            border: 1.5px solid #cbd5e1;
+            font-weight: 500;
+            padding: 10px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+            .btn-soft-outline:hover {
+                background: rgba(52, 152, 219, 0.05);
+                border-color: #3498db;
+                color: #2c5a82;
+                transform: translateY(-2px);
+            }
+
+        .badge-soft {
+            background: #f1f5f9;
+            color: #25455f;
+            font-size: 0.7rem;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+            .badge-soft:hover {
+                background: #e2e8f0;
+                transform: translateY(-1px);
+            }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.88) !important;
+            backdrop-filter: blur(6px);
+            transition: all 0.2s;
+            border-radius: 24px !important;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+            .project-card:hover {
+                background: white !important;
+                transform: translateY(-4px);
+                box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
+            }
+
+        /* scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(8px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            background-color: #3498db;
+            margin-left: 3px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section, .skills-section, .projects-section, .cta-section {
+                min-height: auto;
+                padding: 70px 0;
+            }
+
+            .section-title {
+                font-size: 1.7rem;
+            }
+
+            .skill-card {
+                min-height: 260px;
+                max-height: 300px;
+            }
+
+            .display-5 {
+                font-size: 1.8rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Hero Section — 100vh, content vertically centered -->
+<section id="home" class="hero-section">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <div class="mb-2">
+                    <span class="badge px-3 py-2 rounded-pill" style="background: rgba(46,204,113,0.12); color: #2c6e49; font-size: 0.7rem;">
+                        <i class="fas fa-graduation-cap me-2"></i>Fresh Graduate | Open to Work
+                    </span>
+                </div>
+                <h1 class="display-5 fw-bold mb-2" style="color: #1e2a3e;">
+                    Hi, I'm <span style="color: #3498db;">Manlangit, Randy B.</span>
+                </h1>
+                <div class="mb-3">
+                    <h2 class="h4" style="color: #2c3e50; font-weight: 500;">
+                        Aspiring <span class="typed-text" style="color:#3498db;"></span><span class="cursor">|</span>
+                    </h2>
+                </div>
+                <p class="lead mb-3" style="max-width: 550px; font-size: 0.95rem; color: #4b5f73;">
+                    Passionate backend developer-in-the-making. I craft clean APIs and web apps with
+                    <strong class="text-primary">ASP.NET Core</strong> & <strong class="text-primary">C#</strong>.
+                </p>
+                <div class="d-flex gap-3 flex-wrap mb-4">
+                    <a href="#skills" class="btn-soft-primary">
+                        <i class="fas fa-code me-1"></i>View My Skills
+                    </a>
+                    <a href="#contact" class="btn-soft-outline">
+                        <i class="fas fa-paper-plane me-1"></i>Hire Me
+                    </a>
+                </div>
+                <div class="tech-stack mt-2">
+                    <p class="small mb-2 text-secondary" style="font-size: 0.7rem;">Building with:</p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="badge-soft"><i class="fab fa-microsoft me-1"></i>ASP.NET Core</span>
+                        <span class="badge-soft"><i class="fas fa-code me-1"></i>C#</span>
+                        <span class="badge-soft"><i class="fas fa-database me-1"></i>SQL Server</span>
+                        <span class="badge-soft"><i class="fab fa-js me-1"></i>JavaScript</span>
+                        <span class="badge-soft"><i class="fab fa-github me-1"></i>Git</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-card floating">
+                    <div class="card border-0 shadow-sm p-2" style="border-radius: 28px;">
+                        <div class="card-body p-3 text-center">
+                            <i class="fas fa-laptop-code fa-2x mb-2" style="color: #6c8eae;"></i>
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <div class="stat-box">
+                                        <div class="h3 mb-0 fw-bold" style="color:#2c5a82; font-size: 1.3rem;">15+</div>
+                                        <small class="text-secondary" style="font-size: 0.65rem;">Projects</small>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="stat-box">
+                                        <div class="h3 mb-0 fw-bold" style="color:#2c5a82; font-size: 1.3rem;">2+</div>
+                                        <small class="text-secondary" style="font-size: 0.65rem;">Years Coding</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 pt-1">
+                                <i class="fas fa-quote-left text-secondary opacity-50"></i>
+                                <p class="mb-0 small fst-italic text-secondary" style="font-size: 0.7rem;">"Building things I'm truly passionate about"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <a href="#skills" class="text-decoration-none">
+            <span class="small d-block text-secondary">Explore skills</span>
+            <i class="fas fa-chevron-down text-secondary"></i>
+        </a>
+    </div>
+</section>
+
+<!-- SKILLS SECTION — 100vh WITH COMPACT CARDS (HINDI SAGAD) -->
+<section id="skills" class="skills-section">
+    <div class="container">
+        <div class="text-center mb-4">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill" style="font-size: 0.7rem;">
+                <i class="fas fa-rocket me-1"></i> Technical Expertise
+            </span>
+            <h2 class="section-title fw-bold mt-2">Skills I'm Building</h2>
+            <p class="text-muted mx-auto" style="max-width: 550px; font-size: 0.85rem;">Still learning, but here's what I can do right now</p>
+        </div>
+
+        <div class="row g-3 justify-content-center">
+            <!-- ASP.NET Core -->
+            <div class="col-md-3 col-sm-6">
+                <div class="skill-card card shadow-sm h-100 border-0">
+                    <div class="card-body text-center">
+                        <div class="skill-icon"><i class="fab fa-microsoft" style="color: #3498db;"></i></div>
+                        <h5 class="card-title">ASP.NET Core</h5>
+                        <p class="card-text">Building web APIs and MVC apps. Learning auth, routing, and middleware.</p>
+                        <div class="skill-progress">
+                            <div class="skill-stats"><span class="skill-level">Beginner → Intermediate</span><span class="skill-percentage">65%</span></div>
+                            <div class="progress-bar-custom"><div class="progress-fill" data-width="65"></div></div>
+                        </div>
+                        <div><span class="skill-badge-new"><i class="fas fa-chart-line me-1"></i>Growing Fast</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- C# & .NET -->
+            <div class="col-md-3 col-sm-6">
+                <div class="skill-card card shadow-sm h-100 border-0">
+                    <div class="card-body text-center">
+                        <div class="skill-icon"><i class="fas fa-code" style="color: #6c5ce7;"></i></div>
+                        <h5 class="card-title">C# & .NET</h5>
+                        <p class="card-text">Object-oriented programming, LINQ, async/await, and basic design patterns.</p>
+                        <div class="skill-progress">
+                            <div class="skill-stats"><span class="skill-level">Learning Daily</span><span class="skill-percentage">70%</span></div>
+                            <div class="progress-bar-custom"><div class="progress-fill" data-width="70"></div></div>
+                        </div>
+                        <div><span class="skill-badge-new"><i class="fas fa-heart me-1"></i>Daily Practice</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- SQL & EF Core -->
+            <div class="col-md-3 col-sm-6">
+                <div class="skill-card card shadow-sm h-100 border-0">
+                    <div class="card-body text-center">
+                        <div class="skill-icon"><i class="fas fa-database" style="color: #27ae60;"></i></div>
+                        <h5 class="card-title">SQL & EF Core</h5>
+                        <p class="card-text">CRUD operations, joins, migrations, and database design basics.</p>
+                        <div class="skill-progress">
+                            <div class="skill-stats"><span class="skill-level">Building Foundation</span><span class="skill-percentage">60%</span></div>
+                            <div class="progress-bar-custom"><div class="progress-fill" data-width="60"></div></div>
+                        </div>
+                        <div><span class="skill-badge-new"><i class="fas fa-layer-group me-1"></i>Solid Foundation</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Git & GitHub -->
+            <div class="col-md-3 col-sm-6">
+                <div class="skill-card card shadow-sm h-100 border-0">
+                    <div class="card-body text-center">
+                        <div class="skill-icon"><i class="fab fa-github" style="color: #e67e22;"></i></div>
+                        <h5 class="card-title">Git & GitHub</h5>
+                        <p class="card-text">Version control, branching, pull requests, and collaboration basics.</p>
+                        <div class="skill-progress">
+                            <div class="skill-stats"><span class="skill-level">Getting Comfortable</span><span class="skill-percentage">75%</span></div>
+                            <div class="progress-bar-custom"><div class="progress-fill" data-width="75"></div></div>
+                        </div>
+                        <div><span class="skill-badge-new"><i class="fas fa-code-branch me-1"></i>Version Control Pro</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 justify-content-center mt-2">
+            <!-- JavaScript -->
+            <div class="col-md-3 col-sm-6">
+                <div class="skill-card card shadow-sm h-100 border-0">
+                    <div class="card-body text-center">
+                        <div class="skill-icon"><i class="fab fa-js" style="color: #f1c40f;"></i></div>
+                        <h5 class="card-title">JavaScript</h5>
+                        <p class="card-text">ES6+, async/await, DOM manipulation, and basic React knowledge.</p>
+                        <div class="skill-progress">
+                            <div class="skill-stats"><span class="skill-level">Intermediate</span><span class="skill-percentage">55%</span></div>
+                            <div class="progress-bar-custom"><div class="progress-fill" data-width="55"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- REST APIs -->
+            <div class="col-md-3 col-sm-6">
+                <div class="skill-card card shadow-sm h-100 border-0">
+                    <div class="card-body text-center">
+                        <div class="skill-icon"><i class="fas fa-cloud-upload-alt" style="color: #3498db;"></i></div>
+                        <h5 class="card-title">REST APIs</h5>
+                        <p class="card-text">API design, HTTP methods, status codes, and Postman testing.</p>
+                        <div class="skill-progress">
+                            <div class="skill-stats"><span class="skill-level">Learning</span><span class="skill-percentage">50%</span></div>
+                            <div class="progress-bar-custom"><div class="progress-fill" data-width="50"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <div class="alert fade show mb-0" role="alert" style="background: linear-gradient(135deg, rgba(52,152,219,0.08), rgba(46,204,113,0.06)); border: none; border-radius: 20px; padding: 0.8rem;">
+                <i class="fas fa-seedling me-2 text-success"></i>
+                <strong style="font-size: 0.8rem;">Currently learning:</strong> <span style="font-size: 0.8rem;">Entity Framework Core, REST API best practices, and Docker basics.</span>
+                <div class="mt-2">
+                    <span class="badge bg-primary me-1" style="font-size: 0.65rem;">Next: Microservices</span>
+                    <span class="badge bg-primary" style="font-size: 0.65rem;">Cloud Deployment</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS SECTION — 100vh (minimal but clean) -->
+<section id="projects" class="projects-section">
+    <div class="container">
+        <div class="text-center mb-4">
+            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill" style="font-size: 0.7rem;">Student Projects</span>
+            <h2 class="section-title fw-bold mb-2">Projects I've Built</h2>
+            <p class="text-muted mx-auto" style="max-width: 550px; font-size: 0.85rem;">Practical apps to sharpen backend & API skills</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="project-card card shadow-sm h-100 border-0 p-3">
+                    <div class="card-body p-2">
+                        <i class="fas fa-shopping-cart fa-2x text-primary mb-2"></i>
+                        <h5 class="fw-bold" style="font-size: 1rem;">Simple E‑Commerce API</h5>
+                        <p class="text-muted small">REST API for product management with ASP.NET Core & SQL Server.</p>
+                        <div class="mt-2"><span class="badge bg-primary me-1" style="font-size: 0.6rem;">ASP.NET Core</span><span class="badge bg-primary" style="font-size: 0.6rem;">SQL Server</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="project-card card shadow-sm h-100 border-0 p-3">
+                    <div class="card-body p-2">
+                        <i class="fas fa-tasks fa-2x text-primary mb-2"></i>
+                        <h5 class="fw-bold" style="font-size: 1rem;">Task Management System</h5>
+                        <p class="text-muted small">Task manager with user authentication using MVC + Entity Framework.</p>
+                        <div class="mt-2"><span class="badge bg-primary me-1" style="font-size: 0.6rem;">C#</span><span class="badge bg-primary" style="font-size: 0.6rem;">Entity Framework</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="project-card card shadow-sm h-100 border-0 p-3">
+                    <div class="card-body p-2">
+                        <i class="fas fa-blog fa-2x text-primary mb-2"></i>
+                        <h5 class="fw-bold" style="font-size: 1rem;">Personal Blog API</h5>
+                        <p class="text-muted small">Blog platform with posts, comments, categories and JWT auth.</p>
+                        <div class="mt-2"><span class="badge bg-primary me-1" style="font-size: 0.6rem;">ASP.NET Core</span><span class="badge bg-primary" style="font-size: 0.6rem;">AutoMapper</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT / CTA SECTION — 100vh -->
+<section id="contact" class="cta-section">
+    <div class="container text-center">
+        <div class="fade-in-up">
+            <span class="badge bg-light text-dark mb-3 px-3 py-2 rounded-pill" style="font-size: 0.7rem;">🚀 Open for Opportunities</span>
+            <h2 class="display-6 fw-bold mb-3" style="color: white; font-size: 1.8rem;">Let's Build Something Amazing Together</h2>
+            <p class="lead mb-4" style="color: #cddfe7; font-size: 0.95rem;">Available for freelance projects, contract work, and full-time positions.</p>
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="mailto:randy@example.com" class="btn btn-outline-light btn-lg px-4 rounded-pill" style="font-size: 0.85rem;">
+                    <i class="fas fa-envelope me-2"></i>Contact Me
+                </a>
+                <a href="#" class="btn btn-light btn-lg px-4 rounded-pill" style="color: #1e2a3e; font-size: 0.85rem;">
+                    <i class="fas fa-download me-2"></i>Download Resume
+                </a>
+            </div>
+            <div class="mt-5">
+                <div class="d-flex gap-4 justify-content-center">
+                    <a href="#" class="text-white-50" style="font-size: 1.3rem;"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-white-50" style="font-size: 1.3rem;"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-white-50" style="font-size: 1.3rem;"><i class="fab fa-twitter"></i></a>
+                </div>
+                <p class="text-white-50 small mt-4 opacity-50">© 2025 Manlangit | Backend Dev Portfolio</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/a6f6b1c5ac.js" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate progress bars when skills section becomes visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.progress-fill');
+                    fills.forEach(fill => {
+                        const width = fill.getAttribute('data-width');
+                        if (width && fill.style.width !== width+'%') {
+                            setTimeout(() => { fill.style.width = width + '%'; }, 120);
+                        }
+                    });
+                    if(entry.target.classList.contains('skills-section')) observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.35 });
+        const skillsSection = document.querySelector('.skills-section');
+        if (skillsSection) observer.observe(skillsSection);
+
+        // Typewriter effect
+        const roles = ["Backend Developer", "ASP.NET Core Dev", "Fresh Graduate", "Future Software Engineer"];
+        let roleIdx = 0, charIdx = 0, isDeleting = false;
+        const typedSpan = document.querySelector('.typed-text');
+        if (typedSpan) {
+            function typeWriter() {
+                const full = roles[roleIdx];
+                if (isDeleting) {
+                    typedSpan.textContent = full.substring(0, charIdx - 1);
+                    charIdx--;
+                } else {
+                    typedSpan.textContent = full.substring(0, charIdx + 1);
+                    charIdx++;
+                }
+                if (!isDeleting && charIdx === full.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, 1800);
+                    return;
+                }
+                if (isDeleting && charIdx === 0) {
+                    isDeleting = false;
+                    roleIdx = (roleIdx + 1) % roles.length;
+                    setTimeout(typeWriter, 400);
+                    return;
+                }
+                setTimeout(typeWriter, isDeleting ? 45 : 85);
+            }
+            typeWriter();
+        }
+
+        // small fix: ensure any hidden progress bar inside second row appears when visible
+        const extraObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    const fills = entry.target.querySelectorAll('.progress-fill');
+                    fills.forEach(fill => { if(fill.getAttribute('data-width') && fill.style.width !== fill.getAttribute('data-width')+'%') fill.style.width = fill.getAttribute('data-width')+'%'; });
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.skill-card').forEach(card => extraObserver.observe(card));
+    });
+</script>
+</body>
+</html>
